@@ -114,10 +114,9 @@ src/
 | `/foods` | Search food database |
 | `/foods/[id]` | Food nutrition facts |
 
-## Related Repositories
+## Related Repository
 
-- [Backend API](https://github.com/ayansasmal/diet-management-app-api) - NestJS backend
-- [Documentation](https://github.com/ayansasmal/low-carb-diet-app) - Architecture & design docs
+- [Backend API](https://github.com/ayansasmal/diet-management-app-api) - NestJS backend with all project documentation
 
 ## License
 

@@ -112,10 +112,9 @@ Required:
 - `NEXT_PUBLIC_API_URL` - Backend API URL
 - `NEXT_PUBLIC_GOOGLE_CLIENT_ID` - OAuth client ID
 
-## Related Repositories
+## Related Repository
 
-- [Backend API](https://github.com/ayansasmal/diet-management-app-api)
-- [Documentation Hub](https://github.com/ayansasmal/low-carb-diet-app)
+- [Backend API](https://github.com/ayansasmal/diet-management-app-api) - NestJS backend with all project documentation
 
 ## Debugging Tips
 
