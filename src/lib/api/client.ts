@@ -13,9 +13,34 @@ import type { ApiResponse, ApiError } from '@/types';
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /**
- * API base URL from environment
+ * API base URL
+ *
+ * In production (HTTPS), use the proxy to avoid mixed content issues.
+ * In development (HTTP), call the backend directly.
  */
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const getApiBaseUrl = () => {
+  // Server-side or build time - use env var
+  if (typeof window === 'undefined') {
+    return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+  }
+
+  // Client-side: use proxy if on HTTPS to avoid mixed content
+  if (window.location.protocol === 'https:') {
+    return '/api/proxy';
+  }
+
+  // Development (HTTP) - call backend directly
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+};
+
+// Lazily evaluated to ensure window is available on client
+let _apiBaseUrl: string | null = null;
+const getBaseUrl = () => {
+  if (_apiBaseUrl === null) {
+    _apiBaseUrl = getApiBaseUrl();
+  }
+  return _apiBaseUrl;
+};
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Types
@@ -95,7 +120,7 @@ export async function apiClient<T>(
   }
 
   // Build request URL
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = `${getBaseUrl()}${endpoint}`;
 
   // Make request
   const response = await fetch(url, {
