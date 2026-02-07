@@ -14,6 +14,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/stores/auth-store';
 import { Spinner } from '@/components/ui/spinner';
+import { post } from '@/lib/api/client';
 import type { AuthResponse } from '@/types';
 
 /**
@@ -42,32 +43,15 @@ function CallbackContent() {
           return;
         }
 
-        // Exchange code for token on backend
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        const response = await fetch(`${apiUrl}/auth/google/callback`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Backend error response:', errorData);
-          throw new Error(errorData.message || 'Authentication failed');
-        }
-
-        const payload = await response.json();
-        console.log('Auth response:', payload);
-
-        // Support both flat and wrapped `{ success, data }` response shapes
-        const authResponse: AuthResponse = (payload && typeof payload === 'object' && 'data' in payload)
-          ? payload.data
-          : payload;
+        // Exchange code for token on backend (uses proxy on HTTPS to avoid mixed content)
+        const authResponse = await post<AuthResponse>(
+          '/auth/google/callback',
+          { code },
+          { skipAuth: true }
+        );
 
         if (!authResponse || !authResponse.accessToken || !authResponse.user) {
-          console.error('Invalid auth response structure:', payload);
+          console.error('Invalid auth response structure:', authResponse);
           throw new Error('Invalid authentication response from backend');
         }
 
