@@ -1,9 +1,10 @@
 'use client';
 
 /**
- * Sidebar - Main navigation for desktop
+ * Sidebar - Main navigation for desktop + mobile drawer
  */
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -112,63 +113,154 @@ const navItems = [
   },
 ];
 
+interface SidebarProps {
+  mobileMenuOpen?: boolean;
+  onClose?: () => void;
+}
+
 /**
- * Sidebar navigation
+ * Navigation links shared between desktop and mobile
  */
-export function Sidebar() {
+function NavLinks({ pathname, onClick }: { pathname: string; onClick?: () => void }) {
+  return (
+    <>
+      {navItems.map((item) => {
+        const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onClick}
+            className={cn(
+              isActive ? 'nav-link-active' : 'nav-link'
+            )}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+/**
+ * Sidebar navigation (desktop persistent + mobile drawer)
+ */
+export function Sidebar({ mobileMenuOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    onClose?.();
+  }, [pathname, onClose]);
+
   return (
-    <aside className="hidden lg:flex lg:flex-col w-64 border-r border-border bg-card">
-      {/* Logo */}
-      <div className="h-16 flex items-center px-6 border-b border-border">
-        <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg gradient-health flex items-center justify-center">
-            <svg
-              className="w-4 h-4 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </div>
-          <span className="font-semibold text-foreground">Diet App</span>
-        </Link>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                isActive ? 'nav-link-active' : 'nav-link'
-              )}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-border">
-        <div className="text-xs text-muted">
-          <p>Diet Management App</p>
-          <p className="mt-1">Version 1.0.0</p>
+    <>
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:flex lg:flex-col w-64 border-r border-border bg-card">
+        {/* Logo */}
+        <div className="h-16 flex items-center px-6 border-b border-border">
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg gradient-health flex items-center justify-center">
+              <svg
+                className="w-4 h-4 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </div>
+            <span className="font-semibold text-foreground">Diet App</span>
+          </Link>
         </div>
-      </div>
-    </aside>
+
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-1">
+          <NavLinks pathname={pathname} />
+        </nav>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-border">
+          <div className="text-xs text-muted">
+            <p>Diet Management App</p>
+            <p className="mt-1">Version 1.0.0</p>
+          </div>
+        </div>
+      </aside>
+
+      {/* Mobile drawer overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50"
+            onClick={onClose}
+            aria-hidden="true"
+          />
+
+          {/* Drawer panel */}
+          <aside className="fixed inset-y-0 left-0 w-64 bg-card border-r border-border flex flex-col shadow-xl">
+            {/* Header with close button */}
+            <div className="h-16 flex items-center justify-between px-6 border-b border-border">
+              <Link href="/dashboard" onClick={onClose} className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg gradient-health flex items-center justify-center">
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                </div>
+                <span className="font-semibold text-foreground">Diet App</span>
+              </Link>
+
+              {/* Close button */}
+              <button
+                onClick={onClose}
+                className="p-2 -mr-2 text-muted hover:text-foreground"
+                aria-label="Close menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+              <NavLinks pathname={pathname} onClick={onClose} />
+            </nav>
+
+            {/* Footer */}
+            <div className="p-4 border-t border-border safe-area-inset">
+              <div className="text-xs text-muted">
+                <p>Diet Management App</p>
+                <p className="mt-1">Version 1.0.0</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

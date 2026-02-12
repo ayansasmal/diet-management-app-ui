@@ -5,10 +5,11 @@
  *
  * Includes:
  * - AuthGuard for route protection
- * - Sidebar navigation (desktop)
+ * - Sidebar navigation (desktop + mobile drawer)
  * - Header with user menu
  */
 
+import { useState } from 'react';
 import { AuthGuard } from '@/components/auth';
 import { Header, Sidebar } from '@/components/layout';
 
@@ -17,16 +18,18 @@ export default function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <AuthGuard>
       <div className="min-h-screen flex">
-        {/* Sidebar - Desktop only */}
-        <Sidebar />
+        {/* Sidebar - Desktop + Mobile drawer */}
+        <Sidebar mobileMenuOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
         {/* Main content area */}
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <Header />
+          <Header onMenuToggle={() => setMobileMenuOpen(true)} />
 
           {/* Page content */}
           <main className="flex-1 p-4 lg:p-6 overflow-auto">
