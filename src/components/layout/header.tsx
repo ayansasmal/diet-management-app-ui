@@ -9,10 +9,14 @@ import { logout } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { Avatar, ThemeSwitcher } from '@/components/ui';
 
+interface HeaderProps {
+  onMenuToggle?: () => void;
+}
+
 /**
  * App header with user menu
  */
-export function Header() {
+export function Header({ onMenuToggle }: HeaderProps) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
@@ -23,10 +27,11 @@ export function Header() {
 
   return (
     <header className="h-16 border-b border-border bg-card px-4 lg:px-6 flex items-center justify-between">
-      {/* Mobile menu button - TODO: Implement mobile nav */}
+      {/* Mobile menu button */}
       <button
         className="lg:hidden p-2 -ml-2 text-muted hover:text-foreground"
         aria-label="Open menu"
+        onClick={onMenuToggle}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
