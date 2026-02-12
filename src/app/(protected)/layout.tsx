@@ -9,7 +9,7 @@
  * - Header with user menu
  */
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { AuthGuard } from '@/components/auth';
 import { Header, Sidebar } from '@/components/layout';
 
@@ -19,17 +19,19 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const handleMenuOpen = useCallback(() => setMobileMenuOpen(true), []);
+  const handleMenuClose = useCallback(() => setMobileMenuOpen(false), []);
 
   return (
     <AuthGuard>
       <div className="min-h-screen flex">
         {/* Sidebar - Desktop + Mobile drawer */}
-        <Sidebar mobileMenuOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+        <Sidebar mobileMenuOpen={mobileMenuOpen} onClose={handleMenuClose} />
 
         {/* Main content area */}
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <Header onMenuToggle={() => setMobileMenuOpen(true)} />
+          <Header onMenuToggle={handleMenuOpen} />
 
           {/* Page content */}
           <main className="flex-1 p-4 lg:p-6 overflow-auto">

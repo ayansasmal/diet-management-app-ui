@@ -4,7 +4,7 @@
  * Sidebar - Main navigation for desktop + mobile drawer
  */
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -150,10 +150,14 @@ function NavLinks({ pathname, onClick }: { pathname: string; onClick?: () => voi
  */
 export function Sidebar({ mobileMenuOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const prevPathname = useRef(pathname);
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change (not on mount)
   useEffect(() => {
-    onClose?.();
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      onClose?.();
+    }
   }, [pathname, onClose]);
 
   return (
