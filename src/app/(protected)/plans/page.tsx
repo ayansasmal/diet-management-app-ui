@@ -98,10 +98,10 @@ export default function PlansPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Nutrition Plans</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Nutrition Plans</h1>
         <p className="text-muted mt-1">
           Browse evidence-based nutrition plans designed for different goals and lifestyles.
         </p>
@@ -114,7 +114,7 @@ export default function PlansPage() {
             key={option.value}
             onClick={() => setDifficultyFilter(option.value)}
             className={cn(
-              'shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors',
+              'shrink-0 px-3 py-2 sm:px-4 min-h-[44px] rounded-full text-sm font-medium transition-colors',
               difficultyFilter === option.value
                 ? 'bg-primary-600 text-white'
                 : 'bg-card border border-border text-foreground hover:bg-primary-50 dark:hover:bg-primary-900/30'
@@ -148,7 +148,7 @@ export default function PlansPage() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
           {filteredPlans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} />
           ))}

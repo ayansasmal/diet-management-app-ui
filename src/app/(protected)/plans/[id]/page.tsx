@@ -140,7 +140,7 @@ export default function PlanDetailsPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
       {/* Back link */}
       <Link
         href="/plans"
@@ -154,11 +154,11 @@ export default function PlanDetailsPage() {
 
       {/* Plan header */}
       <div className="card">
-        <div className="flex items-start gap-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
           {/* Plan icon */}
           {plan.icon && (
             <div
-              className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shrink-0"
               style={{
                 backgroundColor: plan.accentColor ? `${plan.accentColor}20` : 'var(--color-primary-100)',
               }}
@@ -168,7 +168,7 @@ export default function PlanDetailsPage() {
           )}
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold text-foreground">{plan.name}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">{plan.name}</h1>
             <p className="text-muted mt-1">{plan.shortDescription}</p>
 
             {/* Badges */}

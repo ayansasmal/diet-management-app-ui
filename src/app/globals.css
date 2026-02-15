@@ -137,11 +137,11 @@ body {
 
   /* Cards */
   .card {
-    @apply bg-card rounded-xl border border-border shadow-card p-6;
+    @apply bg-card rounded-xl border border-border shadow-card p-4 sm:p-6;
   }
 
   .card-elevated {
-    @apply bg-card rounded-xl border border-border shadow-elevated p-6;
+    @apply bg-card rounded-xl border border-border shadow-elevated p-4 sm:p-6;
   }
 
   /* Form inputs */

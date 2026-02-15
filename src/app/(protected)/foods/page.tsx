@@ -154,10 +154,10 @@ export default function FoodsPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Food Database</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Food Database</h1>
         <p className="text-muted mt-1">
           Search our database of foods with detailed nutrition information.
         </p>
@@ -232,7 +232,7 @@ export default function FoodsPage() {
         </div>
       ) : (
         <>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
             {foods.map((food) => (
               <FoodCard key={food.id} food={food} />
             ))}

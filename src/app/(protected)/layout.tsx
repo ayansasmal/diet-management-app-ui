@@ -29,7 +29,7 @@ export default function ProtectedLayout({
         <Sidebar mobileMenuOpen={mobileMenuOpen} onClose={handleMenuClose} />
 
         {/* Main content area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
           <Header onMenuToggle={handleMenuOpen} />
 

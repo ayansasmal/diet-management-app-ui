@@ -55,11 +55,11 @@ export function PlanCard({ plan, className }: PlanCardProps) {
       )}
     >
       {/* Header with icon and name */}
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3 sm:gap-4">
         {/* Plan icon */}
         {plan.icon && (
           <div
-            className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-xl sm:text-2xl shrink-0"
             style={{
               backgroundColor: plan.accentColor
                 ? `${plan.accentColor}20`

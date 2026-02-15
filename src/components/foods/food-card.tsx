@@ -36,8 +36,8 @@ function MacroItem({
   color: string;
 }) {
   return (
-    <div className="text-center">
-      <div className={cn('text-sm font-semibold', color)}>
+    <div className="text-center min-w-0">
+      <div className={cn('text-xs sm:text-sm font-semibold truncate', color)}>
         {value}
         {unit}
       </div>
@@ -59,10 +59,10 @@ export function FoodCard({ food, className }: FoodCardProps) {
       )}
     >
       {/* Header with category icon and name */}
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-2 sm:gap-3">
         {/* Category icon */}
         {food.categoryIcon && (
-          <div className="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-xl shrink-0">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-lg sm:text-xl shrink-0">
             {food.categoryIcon}
           </div>
         )}
@@ -107,7 +107,7 @@ export function FoodCard({ food, className }: FoodCardProps) {
       </div>
 
       {/* Macro grid */}
-      <div className="grid grid-cols-4 gap-2 mt-3 pt-3 border-t border-border">
+      <div className="grid grid-cols-4 gap-1 sm:gap-2 mt-3 pt-3 border-t border-border">
         <MacroItem
           label="Cal"
           value={food.calories}

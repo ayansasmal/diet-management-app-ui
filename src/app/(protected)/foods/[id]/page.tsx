@@ -126,7 +126,7 @@ export default function FoodDetailsPage() {
   const serving = selectedServing || food.servings[0];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-4 sm:space-y-6">
       {/* Back link */}
       <Link
         href="/foods"
@@ -140,16 +140,16 @@ export default function FoodDetailsPage() {
 
       {/* Food header */}
       <div className="card">
-        <div className="flex items-start gap-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
           {/* Category icon or food image */}
-          <div className="w-16 h-16 rounded-xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-3xl shrink-0">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-2xl sm:text-3xl shrink-0">
             {food.category?.icon || '🍽️'}
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h1 className="text-2xl font-bold text-foreground">{food.name}</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-foreground">{food.name}</h1>
                 {food.brandName && <p className="text-muted">{food.brandName}</p>}
               </div>
 
@@ -208,7 +208,7 @@ export default function FoodDetailsPage() {
                 key={s.id}
                 onClick={() => setSelectedServing(s)}
                 className={cn(
-                  'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                  'px-3 py-2 sm:px-4 min-h-[44px] rounded-lg text-sm font-medium transition-colors',
                   serving.id === s.id
                     ? 'bg-primary-600 text-white'
                     : 'bg-card border border-border text-foreground hover:bg-primary-50 dark:hover:bg-primary-900/30'

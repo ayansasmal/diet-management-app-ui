@@ -44,7 +44,7 @@ export function CategoryFilter({
       <button
         onClick={() => onSelect(null)}
         className={cn(
-          'shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors',
+          'shrink-0 px-3 py-2 sm:px-4 min-h-[44px] rounded-full text-sm font-medium transition-colors',
           selected === null
             ? 'bg-primary-600 text-white'
             : 'bg-card border border-border text-foreground hover:bg-primary-50 dark:hover:bg-primary-900/30'
@@ -59,7 +59,7 @@ export function CategoryFilter({
           key={category.slug}
           onClick={() => onSelect(category.slug)}
           className={cn(
-            'shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2',
+            'shrink-0 px-3 py-2 sm:px-4 min-h-[44px] rounded-full text-sm font-medium transition-colors flex items-center gap-2',
             selected === category.slug
               ? 'bg-primary-600 text-white'
               : 'bg-card border border-border text-foreground hover:bg-primary-50 dark:hover:bg-primary-900/30'
